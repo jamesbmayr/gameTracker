@@ -1,7 +1,7 @@
 # gamesTimeline
 see how videogame series perform over time: https://www.gamestimeline.herokuapp.com
 
-<pre style='line-height: 0.5; text-align: center'>
+<pre style='line-height: 0.1; text-align: center'>
        •        
   •••   • ••••• 
  •   • •  • • • 
