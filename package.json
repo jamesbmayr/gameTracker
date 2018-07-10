@@ -1,0 +1,15 @@
+{
+  "name": "gametimeline",
+  "version": "1.0.0",
+  "description": "see how videogame series perform over time",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"test\"",
+    "start": "node index.js"
+  },
+  "author": "James Mayr",
+  "license": "ISC",
+  "engines": {
+  	"node": "6.11.1"
+  }
+}
