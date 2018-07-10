@@ -23,7 +23,7 @@
 	/* title */
 		#title {
 			float: left;
-			width: 290px;
+			width: 340px;
 			height: 40px;
 			padding: 5px;
 			text-align: center;
@@ -36,12 +36,12 @@
 	/* search */
 		#search {
 			float: left;
-			width: calc(100vw - 300px);
+			width: calc(100vw - 350px);
 		}
 
 		#search-field {
 			float: left;
-			width: calc(100vw - 300px - 50px - 22px);
+			width: calc(100vw - 350px - 50px - 22px);
 			height: 30px;
 			margin: 10px;
 			background-color: #222222;
