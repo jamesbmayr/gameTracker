@@ -5,6 +5,9 @@
 		padding: 0px;
 		border: 0px;
 		box-shadow: 0px 0px 20px #111111 inset;
+		height: 100vh;
+		width: 100vw;
+		overflow: hidden;
 	}
 
 /*** navbar ***/
@@ -18,6 +21,7 @@
 		box-shadow: 0px 0px 20px #111111;
 		padding: 0px;
 		margin: 0px;
+		overflow: hidden;
 	}
 
 	/* title */
@@ -31,6 +35,13 @@
 			line-height: 1.5;
 			color: #dddddd;
 			user-select: none;
+			text-decoration: none;
+		}
+
+		#title:hover, #title:focus {
+			text-decoration: none;
+			outline: none;
+			text-shadow: 0px 0px 2px #ffffff;
 		}
 
 	/* search */
@@ -116,7 +127,27 @@
 		height: 100vh;
 		width: 100vw;
 		background-color: #222222;
+		z-index: 1;
 	}
+
+	/* logo */
+		#logo {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			z-index: 1;
+			height: 200px;
+			width: 200px;
+			opacity: 0.15;
+			background-image: url("logo.png");
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+			filter: blur(2px);
+			pointer-events: none;
+			user-select: none;
+		}
 
 	/* info */
 		#info {
@@ -164,12 +195,13 @@
 			width: 100%;
 			margin: 5px;
 			z-index: 3;
+			user-select: none;
 		}
 
 		#info-name:hover, #info-name:focus {
 			text-decoration: none;
 			outline: none;
-			text-shadow: 0px 0px 2px #ffffff;
+			text-shadow: 0px 0px 1px #ffffff;
 		}
 
 		#info-date {
@@ -179,13 +211,15 @@
 			text-shadow: 0px 0px 10px #111111;
 			color: #ffffff;
 			z-index: 3;
+			user-select: none;
 		}
 
 		#info-rating {
 			width: 100%;
 			margin: 5px;
-			font-size: 25px;
+			font-size: 20px;
 			text-shadow: 0px 0px 10px #111111;
 			color: #ffffff;
 			z-index: 3;
+			user-select: none;
 		}

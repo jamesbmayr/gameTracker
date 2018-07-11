@@ -5,6 +5,7 @@
 			trend:  {},
 			points: []
 		}
+		window.data = data
 
 	/* navbar */
 		var button = document.querySelector("#search-button")
@@ -83,51 +84,105 @@
 				drawCanvas(data)
 		}
 
+	/* rotateCanvas */
+		function rotateCanvas(x, y, degrees, callback) {
+			// rotate
+				context.translate(x, y)
+				context.rotate(degrees * Math.PI / 180)
+				context.translate(-x, -y)
+
+			// do whatever
+				callback()
+
+			// rotate back
+				context.translate(x, y)
+				context.rotate(-degrees * Math.PI / 180)
+				context.translate(-x, -y)
+		}
+
 	/* drawCanvas */
 		function drawCanvas(data) {
 			// clear
 				context.clearRect(0, 0, canvas.width, canvas.height)
 
-			// draw axes
-				context.beginPath()
-				context.strokeStyle = "#dddddd"
-				context.lineWidth = 5
-				context.moveTo(100, 150)
-				context.lineTo(100, canvas.height - 100)
-				context.lineTo(canvas.width - 100, canvas.height - 100)
-				context.stroke()
-
-			// draw lines
-				context.beginPath()
-				context.strokeStyle = "#aaaaaa"
-				context.lineWidth = 3
-				for (var p in data.points) {
-					if (!p) {
-						context.moveTo(data.points[p].x, data.points[p].y)
-					}
-					else {
-						context.lineTo(data.points[p].x, data.points[p].y)
-					}
-				}
-				context.stroke()
-
-			// draw points
-				for (var p in data.points) {
+			if (data.points.length || true) {
+				// draw axes
 					context.beginPath()
-					context.fillStyle = "#ffffff"
-					context.arc(data.points[p].x, data.points[p].y, 5, 0, 2 * Math.PI)
-					context.fill()
-				}
-
-			// draw trendline
-				if (data.trend.start) {
-					context.beginPath()
-					context.strokeStyle = "#777777"
+					context.strokeStyle = "#333333"
 					context.lineWidth = 5
-					context.moveTo(data.trend.start.x, data.trend.start.y)
-					context.lineTo(data.trend.end.x,   data.trend.end.y)
+					context.moveTo(100, 150)
+					context.lineTo(100, canvas.height - 100)
+					context.lineTo(canvas.width - 100, canvas.height - 100)
 					context.stroke()
-				}
+
+				// label axes
+					context.font = "30px 'Press Start 2P', monospace"
+					context.fillStyle = "#333333"
+					context.textAlign = "center"
+					context.fillText("release date", canvas.width / 2, canvas.height - 25)
+					rotateCanvas(canvas.width / 2, canvas.height / 2, 90, function() {
+						context.fillText("rating", (canvas.width / 2) + 25, (canvas.height / 2) + (canvas.width / 2) - 25)
+					})
+
+				// label x-axis values
+					context.font = "10px 'Press Start 2P', monospace"
+					context.fillStyle = "#333333"
+					context.textAlign = "left"
+
+					for (var i = getRounded(data.trend.min + 2.5, 5); i < data.trend.max; i += 5) {
+						var x = 100 + ((i - data.trend.min) * (canvas.width - 200) / data.trend.range)
+						context.fillText(1970 + i, x, canvas.height - 85)
+					}
+
+				// label y-axis values
+					context.font = "10px 'Press Start 2P', monospace"
+					context.fillStyle = "#333333"
+					context.textAlign = "right"
+
+					for (var i = 0; i <= 100; i += 25) {
+						var y = canvas.height - 95 - (i * (canvas.height - 250) / 100)
+						context.fillText(i, 95, y)
+					}
+
+				// draw trendline
+					if (data.trend.start) {
+						context.beginPath()
+						context.strokeStyle = "#773333"
+						context.lineWidth = 5
+						context.moveTo(data.trend.start.x, data.trend.start.y)
+						context.lineTo(data.trend.end.x,   data.trend.end.y)
+						context.stroke()
+					}
+					
+				// draw lines
+					context.beginPath()
+					context.strokeStyle = "#333377"
+					context.lineWidth = 3
+					for (var p in data.points) {
+						if (!p) {
+							context.moveTo(data.points[p].x, data.points[p].y)
+						}
+						else {
+							context.lineTo(data.points[p].x, data.points[p].y)
+						}
+					}
+					context.stroke()
+
+				// draw points
+					for (var p in data.points) {
+						context.beginPath()
+						context.fillStyle = "#337733"
+						context.arc(data.points[p].x, data.points[p].y, 5, 0, 2 * Math.PI)
+						context.fill()
+
+						context.font = "8px 'Press Start 2P', monospace"
+						context.fillStyle = "#77aa77"
+						context.textAlign = "left"
+						rotateCanvas(data.points[p].x, data.points[p].y, 90, function() {
+							context.fillText(data.points[p].name, data.points[p].x + 16, data.points[p].y + 4)	
+						})
+					}
+			}
 		}
 
 	/* displayInfo */
@@ -173,7 +228,7 @@
 						info.querySelector("#info-name").innerText = game.name
 						info.querySelector("#info-name").href = game.url
 						info.querySelector("#info-date").innerText = new Date(game.date).toLocaleString().split(/[,\s]/gi)[0]
-						info.querySelector("#info-rating").innerText = game.rating.toFixed(2)
+						info.querySelector("#info-rating").innerText = game.rating.toFixed(0) + "/100"
 						info.querySelector("#info-image").style.backgroundImage = "url(" + game.image + ")"
 					}
 				}
@@ -224,11 +279,11 @@
 			// get endpoints
 				var start = {
 					x: 100,
-					y: (canvas.height) - (( ((slope * min) + intercept) / 100) * (canvas.height - 250))
+					y: (canvas.height) - 100 - (( ((slope * min) + intercept) / 100) * (canvas.height - 250))
 				}
 				var end   = {
 					x: (canvas.width - 100),
-					y: (canvas.height) - (( ((slope * max) + intercept) / 100) * (canvas.height - 250))
+					y: (canvas.height) - 100 - (( ((slope * max) + intercept) / 100) * (canvas.height - 250))
 				}
 
 			// return trend
@@ -256,15 +311,21 @@
 					var y = games[g].rating
 
 						x = (100) + (((x - trend.min) / trend.range) * (canvas.width - 200))
-						y = (canvas.height) - ((y / 100) * (canvas.height - 250))
+						y = (canvas.height) - 100 - ((y / 100) * (canvas.height - 250))
 
 					points.push({
 						x: x,
 						y: y,
-						id: games[g].id
+						id: games[g].id,
+						name: games[g].name
 					})
 				}
 
 			// return points
 				return points
+		}
+
+	/* getRounded */
+		function getRounded(num, nearest) {
+			return Math.round(num / nearest) * nearest
 		}

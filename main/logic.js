@@ -42,7 +42,7 @@
 					var environment = {
 						port:    3000,
 						domain:  "localhost",
-						apikey:  null
+						apikey:  "afa35c5ab9533dbda5bd6403c2d14d40"
 					}
 				}
 
