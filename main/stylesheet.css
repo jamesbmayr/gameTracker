@@ -27,11 +27,10 @@
 	/* title */
 		#title {
 			float: left;
-			width: 340px;
-			height: 40px;
-			padding: 5px;
-			text-align: center;
-			font-size: 25px;
+			width: 260px;
+			height: 30px;
+			padding: 10px;
+			font-size: 20px;
 			line-height: 1.5;
 			color: #dddddd;
 			user-select: none;
@@ -41,18 +40,19 @@
 		#title:hover, #title:focus {
 			text-decoration: none;
 			outline: none;
-			text-shadow: 0px 0px 2px #ffffff;
+			text-shadow: 0px 0px 10px #ffffff;
 		}
 
 	/* search */
 		#search {
 			float: left;
-			width: calc(100vw - 350px);
+			width: calc(100vw - 260px - 70px);
+			height: auto;
 		}
 
 		#search-field {
 			float: left;
-			width: calc(100vw - 350px - 50px - 22px);
+			width: calc(100vw - 260px - 70px - 22px - 50px);
 			height: 30px;
 			margin: 10px;
 			background-color: #222222;
@@ -85,8 +85,8 @@
 			border: 0px;
 		}
 
-		#search-button:hover {
-			text-shadow: 0px 0px 5px #dddddd;
+		#search-button:hover, #search-button:focus {
+			text-shadow: 0px 0px 10px #dddddd;
 		}
 
 		#search-button #search-button-search {
@@ -119,6 +119,26 @@
 			100% {
 				transform: rotate(360deg);
 			}
+		}
+
+	/* j-logo */
+		#j-logo {
+			float: left;
+			background-color: transparent;
+			background-image: url("../resources/j.png");
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center center;
+			height: 30px;
+			width: 30px;
+			margin: 10px;
+			cursor: pointer;
+			z-index: 1000;
+			outline: none;
+		}
+
+		#j-logo:hover, #j-logo:focus {
+			filter: drop-shadow(0px 0px 4px #dddddd);
 		}
 
 /*** canvas ***/
